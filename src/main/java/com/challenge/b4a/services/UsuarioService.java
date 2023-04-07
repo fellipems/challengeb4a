@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -31,7 +32,7 @@ public class UsuarioService {
         try {
             return usuarioRepository.save(usuario);
         } catch (ConstraintViolationException e) {
-            throw new DadoObrigatorioNaoInformadoException("Dados obrigatórios não informados");
+            throw new DadoObrigatorioNaoInformadoException(e.getConstraintViolations().stream().map(message -> message.getPropertyPath().toString() + " " + message.getMessage()).collect(Collectors.toList()).toString());
         }
     }
 
@@ -51,7 +52,7 @@ public class UsuarioService {
             usuarioDoBancoDados.setEnderecos(usuario.getEnderecos());
         }
 
-        return usuarioRepository.save(usuario);
+        return usuarioRepository.save(usuarioDoBancoDados);
     }
 
     public void deletaUsuario(Long usuarioId) {
