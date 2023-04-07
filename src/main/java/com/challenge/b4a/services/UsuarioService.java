@@ -1,10 +1,10 @@
-package com.challenge.b4a.service;
+package com.challenge.b4a.services;
 
-import com.challenge.b4a.domain.Usuario;
-import com.challenge.b4a.exception.DadoObrigatorioNaoInformadoException;
-import com.challenge.b4a.exception.UsuarioNaoEncontradoException;
-import com.challenge.b4a.exception.UsuarioNaoInformadoException;
-import com.challenge.b4a.repository.UsuarioRepository;
+import com.challenge.b4a.domains.Usuario;
+import com.challenge.b4a.exceptions.DadoObrigatorioNaoInformadoException;
+import com.challenge.b4a.exceptions.UsuarioNaoEncontradoException;
+import com.challenge.b4a.exceptions.UsuarioNaoInformadoException;
+import com.challenge.b4a.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
