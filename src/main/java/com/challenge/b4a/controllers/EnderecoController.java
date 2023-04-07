@@ -1,9 +1,8 @@
-package com.challenge.b4a.controller;
+package com.challenge.b4a.controllers;
 
-import com.challenge.b4a.domain.Endereco;
-import com.challenge.b4a.service.EnderecoService;
+import com.challenge.b4a.domains.Endereco;
+import com.challenge.b4a.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
