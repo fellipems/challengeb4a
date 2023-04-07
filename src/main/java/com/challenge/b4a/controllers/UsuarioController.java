@@ -1,7 +1,7 @@
-package com.challenge.b4a.controller;
+package com.challenge.b4a.controllers;
 
-import com.challenge.b4a.domain.Usuario;
-import com.challenge.b4a.service.UsuarioService;
+import com.challenge.b4a.domains.Usuario;
+import com.challenge.b4a.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
