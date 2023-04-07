@@ -1,4 +1,4 @@
-package com.challenge.b4a.exception;
+package com.challenge.b4a.exceptions;
 
 public class EnderecoNaoEncontradoException extends RuntimeException {
 
