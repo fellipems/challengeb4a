@@ -1,4 +1,4 @@
-package com.challenge.b4a.domain;
+package com.challenge.b4a.domains;
 
 import org.springframework.data.relational.core.mapping.Column;
 
