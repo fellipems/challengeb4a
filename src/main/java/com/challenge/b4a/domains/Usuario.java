@@ -3,6 +3,7 @@ package com.challenge.b4a.domains;
 import org.springframework.data.relational.core.mapping.Column;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Usuario {
     @Column
     @NotNull
     @NotEmpty
+    @Email(regexp = "^(.+)@(\\S+)$")
     private String email;
 
     @Column
