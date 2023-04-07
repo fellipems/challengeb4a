@@ -1,7 +1,6 @@
-package com.challenge.b4a.repository;
+package com.challenge.b4a.repositories;
 
-import com.challenge.b4a.domain.Endereco;
-import com.challenge.b4a.domain.Usuario;
+import com.challenge.b4a.domains.Endereco;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
