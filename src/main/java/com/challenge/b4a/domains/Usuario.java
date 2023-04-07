@@ -1,9 +1,9 @@
 package com.challenge.b4a.domain;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -15,10 +15,12 @@ public class Usuario {
 
     @Column
     @NotNull
+    @NotEmpty
     private String nome;
 
     @Column
     @NotNull
+    @NotEmpty
     private String email;
 
     @Column

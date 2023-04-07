@@ -1,6 +1,7 @@
 package com.challenge.b4a.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Endereco {
@@ -9,21 +10,26 @@ public class Endereco {
     private Long id;
 
     @Column
+    @NotNull
     private Long numero;
 
     @Column
     private String complemento;
 
     @Column
+    @NotNull
     private String bairro;
 
     @Column
+    @NotNull
     private String cidade;
 
     @Column
+    @NotNull
     private String estado;
 
     @Column
+    @NotNull
     private String cep;
 
     @ManyToOne(fetch = FetchType.LAZY)

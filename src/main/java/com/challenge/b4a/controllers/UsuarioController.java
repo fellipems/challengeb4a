@@ -2,7 +2,6 @@ package com.challenge.b4a.controller;
 
 import com.challenge.b4a.domain.Usuario;
 import com.challenge.b4a.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +20,14 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<Usuario> criaUsuario(@RequestBody Usuario usuario) {
-        Usuario usuarioCriado = usuarioService.criaUsuario(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCriado);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(usuarioService.criaUsuario(usuario));
     }
 
     @PutMapping("/{usuarioId}")
     public ResponseEntity<Usuario> atualizaUsuario(@PathVariable Long usuarioId, @RequestBody Usuario usuario) {
-        UsuarioDto usuarioAtualizado = usuarioService.atualizaUsuario(usuarioId, usuario);
-        return ResponseEntity.ok(usuarioAtualizado);
+        return ResponseEntity.ok(usuarioService.atualizaUsuario(usuarioId, usuario));
     }
 
     @DeleteMapping("/{usuarioId}")
@@ -39,13 +38,12 @@ public class UsuarioController {
 
     @GetMapping
     public ResponseEntity<List<Usuario>> listaUsuarios() {
-        List<UsuarioDto> usuarios = usuarioService.listaTodosUsuarios();
-        return ResponseEntity.ok(usuarios);
+        return ResponseEntity.ok(usuarioService.listaTodosUsuarios());
     }
 
     @GetMapping("/{usuarioId}")
     public ResponseEntity<Usuario> listaUsuarioById(@PathVariable Long usuarioId) {
-        UsuarioDto usuario = usuarioService.listaUsuarioById(usuarioId);
+        Usuario usuario = usuarioService.listaUsuarioById(usuarioId);
         return ResponseEntity.ok(usuario);
     }
 }
