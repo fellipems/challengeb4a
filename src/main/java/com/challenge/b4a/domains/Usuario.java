@@ -1,5 +1,6 @@
 package com.challenge.b4a.domains;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.relational.core.mapping.Column;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class Usuario {
 
     @Column
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Endereco> enderecos;
 
     public Long getId() {
