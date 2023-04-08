@@ -1,5 +1,7 @@
 package com.challenge.b4a.domains;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -32,7 +34,9 @@ public class Endereco {
     @NotNull
     private String cep;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    @JsonBackReference
     private Usuario usuario;
 
     public Long getId() {
