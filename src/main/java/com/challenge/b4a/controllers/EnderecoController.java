@@ -1,8 +1,8 @@
 package com.challenge.b4a.controllers;
 
 import com.challenge.b4a.domains.Endereco;
+import com.challenge.b4a.dto.EnderecoDto;
 import com.challenge.b4a.services.EnderecoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +11,12 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/usuarios/{usuarioId}/enderecos")
 public class EnderecoController {
-    @Autowired
+
     private EnderecoService enderecoService;
+
+    private EnderecoController(EnderecoService enderecoService) {
+        this.enderecoService = enderecoService;
+    }
 
     @PostMapping
     public ResponseEntity<Endereco> criaEndereco(@PathVariable(value = "usuarioId") Long usuarioId, @RequestBody Endereco endereco) {
@@ -24,7 +28,7 @@ public class EnderecoController {
     @PutMapping("/{enderecoId}")
     public ResponseEntity<Endereco> atualizaEndereco(@PathVariable(value = "usuarioId") Long usuarioId,
                                  @PathVariable(value = "enderecoId") Long enderecoId,
-                                 @RequestBody Endereco novoEndereco) {
+                                 @RequestBody EnderecoDto novoEndereco) {
         return ResponseEntity.ok(enderecoService.atualizaEndereco(usuarioId, enderecoId, novoEndereco));
     }
 
@@ -33,7 +37,7 @@ public class EnderecoController {
                                            @PathVariable(value = "enderecoId") Long enderecoId) {
         enderecoService.deletaEndereco(usuarioId, enderecoId);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }
