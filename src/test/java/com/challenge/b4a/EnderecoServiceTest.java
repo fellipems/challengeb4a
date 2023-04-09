@@ -7,6 +7,7 @@ import com.challenge.b4a.exceptions.*;
 import com.challenge.b4a.repositories.EnderecoRepository;
 import com.challenge.b4a.repositories.UsuarioRepository;
 import com.challenge.b4a.services.EnderecoService;
+import com.challenge.b4a.utils.Mensagens;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,6 +69,8 @@ public class EnderecoServiceTest {
         enderecoDto.setComplemento("Ap 123");
         enderecoDto.setEstado("SP");
         enderecoDto.setNumero(456L);
+        enderecoDto.setLogradouro("rua das orquideas pereira");
+        enderecoDto.setUsuario(usuario);
 
         endereco = new Endereco();
         endereco.setBairro("Centro");
@@ -243,7 +246,7 @@ public class EnderecoServiceTest {
         UsuarioNaoInformadoException excecaoEsperada = assertThrows(UsuarioNaoInformadoException.class,
                 () -> enderecoService.vinculaEnderecoNoUsuario(null, enderecoId));
 
-        assertEquals("Usuario nao informado", excecaoEsperada.getMessage());
+        assertEquals(Mensagens.usar("USUARIO_NAO_INFORMADO"), excecaoEsperada.getMessage());
 
         verifyNoInteractions(usuarioRepository);
         verifyNoInteractions(enderecoRepository);
@@ -255,7 +258,7 @@ public class EnderecoServiceTest {
         EnderecoNaoInformadoException excecaoEsperada = assertThrows(EnderecoNaoInformadoException.class,
                 () -> enderecoService.vinculaEnderecoNoUsuario(usuarioId, null));
 
-        assertEquals("endereco nao informado", excecaoEsperada.getMessage());
+        assertEquals(Mensagens.usar("ENDERECO_NAO_INFORMADO"), excecaoEsperada.getMessage());
 
         verifyNoInteractions(usuarioRepository);
         verifyNoInteractions(enderecoRepository);
@@ -270,7 +273,7 @@ public class EnderecoServiceTest {
         UsuarioNaoEncontradoException excecaoEsperada = assertThrows(UsuarioNaoEncontradoException.class,
                 () -> enderecoService.vinculaEnderecoNoUsuario(usuarioId, enderecoId));
 
-        assertEquals("Usuario nao encontrado com id " + usuarioId, excecaoEsperada.getMessage());
+        assertEquals(String.format(Mensagens.usar("USUARIO_NAO_ENCONTRADO_COM_ID"), usuarioId), excecaoEsperada.getMessage());
 
         verify(usuarioRepository).findById(usuarioId);
         verify(enderecoRepository).findById(enderecoId);
