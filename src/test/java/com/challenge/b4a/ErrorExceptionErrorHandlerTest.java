@@ -6,6 +6,7 @@ import com.challenge.b4a.exceptions.EnderecoNaoEncontradoException;
 import com.challenge.b4a.exceptions.UsuarioNaoEncontradoException;
 import com.challenge.b4a.exceptions.UsuarioNaoInformadoException;
 import com.challenge.b4a.resources.exceptions.StandardError;
+import com.challenge.b4a.utils.Mensagens;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -78,7 +79,7 @@ public class ErrorExceptionErrorHandlerTest {
     @Test
     @DisplayName("Deve retornar um ResponseEntity contendo um StandardError com status BAD_REQUEST ao não informar Id de usuário")
     void testHandleUsuarioNaoInformadoException() {
-        UsuarioNaoInformadoException exceptionMock = new UsuarioNaoInformadoException("Usuario nao informado");
+        UsuarioNaoInformadoException exceptionMock = new UsuarioNaoInformadoException(Mensagens.usar("USUARIO_NAO_INFORMADO"));
 
         ResponseEntity<?> response = new ErrorExceptionHandler()
                 .handleUsuarioNaoInformadoException(exceptionMock, request);
@@ -87,14 +88,14 @@ public class ErrorExceptionErrorHandlerTest {
 
         StandardError standardError = (StandardError) response.getBody();
         assertEquals(HttpStatus.BAD_REQUEST.value(), standardError.getStatus());
-        assertEquals("Usuario nao informado", standardError.getMessage());
+        assertEquals(Mensagens.usar("USUARIO_NAO_INFORMADO"), standardError.getMessage());
         assertEquals(exceptionMock.getClass().getCanonicalName(), standardError.getError());
     }
 
     @Test
     @DisplayName("Deve retornar um ResponseEntity contendo um StandardError com status NOT_FOUND ao não encontrar usuário com ID informado")
     void testHandleUsuarioNaoEncontradoException() {
-        UsuarioNaoEncontradoException exception = new UsuarioNaoEncontradoException("Usuario nao encontrado com id " + 1);
+        UsuarioNaoEncontradoException exception = new UsuarioNaoEncontradoException(String.format(Mensagens.usar("USUARIO_NAO_ENCONTRADO_COM_ID"), 1));
 
         ResponseEntity<?> response = new ErrorExceptionHandler()
                 .handleUsuarioNaoEncontradoException(exception, request);
@@ -103,7 +104,7 @@ public class ErrorExceptionErrorHandlerTest {
 
         StandardError standardError = (StandardError) response.getBody();
         assertEquals(HttpStatus.NOT_FOUND.value(), standardError.getStatus());
-        assertEquals("Usuario nao encontrado com id " + 1, standardError.getMessage());
+        assertEquals(String.format(Mensagens.usar("USUARIO_NAO_ENCONTRADO_COM_ID"), 1), standardError.getMessage());
         assertEquals(exception.getClass().getCanonicalName(), standardError.getError());
     }
 
