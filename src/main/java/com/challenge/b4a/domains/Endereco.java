@@ -20,6 +20,10 @@ public class Endereco {
 
     @Column
     @NotNull
+    private String logradouro;
+
+    @Column
+    @NotNull
     private String bairro;
 
     @Column
@@ -101,5 +105,13 @@ public class Endereco {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 }
