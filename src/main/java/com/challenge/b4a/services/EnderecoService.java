@@ -8,9 +8,14 @@ import com.challenge.b4a.repositories.EnderecoRepository;
 import com.challenge.b4a.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
+import javax.validation.ConstraintViolationException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 public class EnderecoService {
@@ -24,45 +29,27 @@ public class EnderecoService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Endereco criaEndereco(Long usuarioId, Endereco endereco) {
-        if (isNull(usuarioId)) {
-            throw new UsuarioNaoInformadoException("Usuario nao informado");
-        }
-
+    public Endereco criaEndereco(Endereco endereco) {
         if (isNull(endereco)) {
             throw new EnderecoNaoInformadoException("endereco nao informado");
         }
 
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario nao encontrado com id " + usuarioId));
-
-        endereco.setUsuario(usuario);
-
-        return enderecoRepository.save(endereco);
+        try {
+            return enderecoRepository.save(endereco);
+        } catch (ConstraintViolationException e) {
+            throw new DadoObrigatorioNaoInformadoException(e.getConstraintViolations().stream().map(message -> message.getPropertyPath().toString() + " " + message.getMessage()).collect(Collectors.toList()).toString());
+        }
     }
 
-    public Endereco atualizaEndereco(Long usuarioId, Long enderecoId, EnderecoDto enderecoDto) {
-        if (Objects.isNull(usuarioId)) {
-            throw new UsuarioNaoInformadoException("Usuario nao informado");
-        }
-
-        if (Objects.isNull(enderecoId) || isNull(enderecoDto)) {
+    public Endereco atualizaEndereco(Long enderecoId, EnderecoDto enderecoDto) {
+        if (isNull(enderecoId) || isNull(enderecoDto)) {
             throw new EnderecoNaoInformadoException("endereco nao informado");
         }
 
         Endereco enderecoDoBanco = enderecoRepository.findById(enderecoId)
                 .orElseThrow(() -> new EnderecoNaoEncontradoException("Endereco nao encontrado com id " + enderecoId));
 
-        if (!enderecoDoBanco.getUsuario().getId().equals(usuarioId)) {
-            throw new EnderecoNaoPertenceAoUsuarioException("Endereco com id " + enderecoId + " nao pertence ao Usuario de id " + usuarioId);
-        }
-
-        enderecoDoBanco.setBairro(enderecoDto.getBairro());
-        enderecoDoBanco.setNumero(enderecoDto.getNumero());
-        enderecoDoBanco.setComplemento(enderecoDto.getComplemento());
-        enderecoDoBanco.setCidade(enderecoDto.getCidade());
-        enderecoDoBanco.setEstado(enderecoDto.getEstado());
-        enderecoDoBanco.setCep(enderecoDto.getCep());
+        validAndSetFields(enderecoDoBanco, enderecoDto);
 
         return enderecoRepository.save(enderecoDoBanco);
     }
@@ -76,5 +63,62 @@ public class EnderecoService {
         }
 
         enderecoRepository.delete(endereco);
+    }
+
+    public List<Endereco> listaTodosEnderecos() {
+        return enderecoRepository.findAll();
+    }
+
+    public Endereco listaEnderecoById(Long enderecoId) {
+        return enderecoRepository.findById(enderecoId)
+                .orElseThrow(() -> new EnderecoNaoEncontradoException("Usuario nao encontrado com id " + enderecoId));
+    }
+
+    private void validAndSetFields(Endereco enderecoDoBanco, EnderecoDto enderecoDto) {
+        if (!isBlank(enderecoDto.getBairro())) {
+            enderecoDoBanco.setBairro(enderecoDto.getBairro());
+        }
+
+        if (nonNull(enderecoDto.getNumero())) {
+            enderecoDoBanco.setNumero(enderecoDto.getNumero());
+        }
+
+        if (!isBlank(enderecoDto.getComplemento())) {
+            enderecoDoBanco.setComplemento(enderecoDto.getComplemento());
+        }
+
+        if (!isBlank(enderecoDto.getCidade())) {
+            enderecoDoBanco.setCidade(enderecoDto.getCidade());
+        }
+
+        if (!isBlank(enderecoDto.getEstado())) {
+            enderecoDoBanco.setEstado(enderecoDto.getEstado());
+        }
+
+        if (!isBlank(enderecoDto.getCep())) {
+            enderecoDoBanco.setCep(enderecoDto.getCep());
+        }
+    }
+
+    public Endereco vinculaEnderecoNoUsuario(Long usuarioId, Long enderecoId) {
+        if (isNull(usuarioId)) {
+            throw new UsuarioNaoInformadoException("Usuario nao informado");
+        }
+
+        if (isNull(enderecoId)) {
+            throw new EnderecoNaoInformadoException("endereco nao informado");
+        }
+
+        Endereco endereco = enderecoRepository.findById(enderecoId)
+                .orElseThrow(() -> new EnderecoNaoEncontradoException("Endereco nao encontrado com id " + enderecoId));
+
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario nao encontrado com id " + usuarioId));
+
+        endereco.setUsuario(usuario);
+
+        enderecoRepository.save(endereco);
+
+        return endereco;
     }
 }
