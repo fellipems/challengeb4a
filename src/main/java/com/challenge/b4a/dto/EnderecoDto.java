@@ -10,6 +10,9 @@ public class EnderecoDto {
     @ApiModelProperty(value = "Complemento", required = true, example = "APTO 111")
     private String complemento;
 
+    @ApiModelProperty(value = "Logradouro", required = true, example = "Rua manoel margarida de sousa")
+    private String logradouro;
+
     @ApiModelProperty(value = "Bairro", required = true, example = "Florinda")
     private String bairro;
 
@@ -79,5 +82,13 @@ public class EnderecoDto {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 }
