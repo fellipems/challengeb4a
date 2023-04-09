@@ -35,12 +35,12 @@ public class ErrorExceptionHandler {
         StandardError standardErrorBuilder = StandardError.Builder
                 .newBuilder()
                 .withTimestamp(new Date().getTime())
-                .withStatus(HttpStatus.NOT_FOUND.value())
+                .withStatus(HttpStatus.BAD_REQUEST.value())
                 .withMessage("Não é possível converter texto no campo número")
                 .withError(exception.getClass().getCanonicalName())
                 .withPath(request.getRequestURI()).build();
 
-        return new ResponseEntity<>(standardErrorBuilder, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(standardErrorBuilder, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DadoObrigatorioNaoInformadoException.class)
@@ -50,6 +50,7 @@ public class ErrorExceptionHandler {
                 .withTimestamp(new Date().getTime())
                 .withStatus(HttpStatus.BAD_REQUEST.value())
                 .withMessage(exception.getMessage())
+                .withError(exception.getClass().getCanonicalName())
                 .withPath(request.getRequestURI()).build();
 
         return new ResponseEntity<>(standardErrorBuilder, HttpStatus.BAD_REQUEST);
@@ -62,6 +63,7 @@ public class ErrorExceptionHandler {
                 .withTimestamp(new Date().getTime())
                 .withStatus(HttpStatus.BAD_REQUEST.value())
                 .withMessage(exception.getMessage())
+                .withError(exception.getClass().getCanonicalName())
                 .withPath(request.getRequestURI()).build();
 
         return new ResponseEntity<>(standardErrorBuilder, HttpStatus.BAD_REQUEST);
@@ -74,6 +76,7 @@ public class ErrorExceptionHandler {
                 .withTimestamp(new Date().getTime())
                 .withStatus(HttpStatus.NOT_FOUND.value())
                 .withMessage(exception.getMessage())
+                .withError(exception.getClass().getCanonicalName())
                 .withPath(request.getRequestURI()).build();
 
         return new ResponseEntity<>(standardErrorBuilder, HttpStatus.NOT_FOUND);
@@ -86,6 +89,7 @@ public class ErrorExceptionHandler {
                 .withTimestamp(new Date().getTime())
                 .withStatus(HttpStatus.NOT_FOUND.value())
                 .withMessage(exception.getMessage())
+                .withError(exception.getClass().getCanonicalName())
                 .withPath(request.getRequestURI()).build();
 
         return new ResponseEntity<>(standardErrorBuilder, HttpStatus.NOT_FOUND);
