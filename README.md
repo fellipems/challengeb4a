@@ -3,7 +3,7 @@
 
 # 🚀 Desafio Backend Java com SpringBoot
 
-Objetivo: Construa uma API RESTful que permita criar, atualizar, listar e excluir usuários e seus respectivos endereços.
+Repo referente à uma API RESTful que permite criar, atualizar, listar e excluir usuários e seus respectivos endereços.
 
 ---
 
