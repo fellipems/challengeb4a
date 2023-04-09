@@ -31,6 +31,12 @@ public class Usuario {
     @JsonManagedReference
     private List<Endereco> enderecos;
 
+    public Usuario() {}
+
+    public Usuario(Long usuarioId) {
+        this.id = usuarioId;
+    }
+
     public Long getId() {
         return id;
     }
