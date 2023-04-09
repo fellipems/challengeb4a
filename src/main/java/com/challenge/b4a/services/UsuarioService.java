@@ -5,6 +5,7 @@ import com.challenge.b4a.exceptions.DadoObrigatorioNaoInformadoException;
 import com.challenge.b4a.exceptions.UsuarioNaoEncontradoException;
 import com.challenge.b4a.exceptions.UsuarioNaoInformadoException;
 import com.challenge.b4a.repositories.UsuarioRepository;
+import com.challenge.b4a.utils.Mensagens;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
@@ -26,7 +27,7 @@ public class UsuarioService {
 
     public Usuario criaUsuario(Usuario usuario) {
         if (isNull(usuario)) {
-            throw new UsuarioNaoInformadoException("Usuario nao informado");
+            throw new UsuarioNaoInformadoException(Mensagens.usar("USUARIO_NAO_INFORMADO"));
         }
 
         try {
@@ -38,7 +39,7 @@ public class UsuarioService {
 
     public Usuario atualizaUsuario(Long usuarioId, Usuario usuario) {
         Usuario usuarioDoBancoDados = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario nao encontrado com id " + usuarioId));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(String.format(Mensagens.usar("USUARIO_NAO_ENCONTRADO_COM_ID"), usuarioId)));
 
         if (!isBlank(usuario.getNome())) {
             usuarioDoBancoDados.setNome(usuario.getNome());
@@ -57,7 +58,7 @@ public class UsuarioService {
 
     public void deletaUsuario(Long usuarioId) {
         Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario nao encontrado com id " + usuarioId));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(String.format(Mensagens.usar("USUARIO_NAO_ENCONTRADO_COM_ID"), usuarioId)));
 
         usuarioRepository.delete(usuario);
     }
@@ -68,6 +69,6 @@ public class UsuarioService {
 
     public Usuario listaUsuarioById(Long usuarioId) {
         return usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario nao encontrado com id " + usuarioId));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(String.format(Mensagens.usar("USUARIO_NAO_ENCONTRADO_COM_ID"), usuarioId)));
     }
 }
