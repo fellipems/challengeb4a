@@ -4,25 +4,25 @@ import com.challenge.b4a.domains.Usuario;
 import io.swagger.annotations.ApiModelProperty;
 
 public class EnderecoDto {
-    @ApiModelProperty(value = "número", required = true, example = "tome tome")
+    @ApiModelProperty(value = "Número", required = true, example = "103")
     private Long numero;
 
-    @ApiModelProperty(value = "complemento", required = true, example = "tome tome")
+    @ApiModelProperty(value = "Complemento", required = true, example = "APTO 111")
     private String complemento;
 
-    @ApiModelProperty(value = "bairro", required = true, example = "tome tome")
+    @ApiModelProperty(value = "Bairro", required = true, example = "Florinda")
     private String bairro;
 
-    @ApiModelProperty(value = "cidade", required = true, example = "tome tome")
+    @ApiModelProperty(value = "Cidade", required = true, example = "São José")
     private String cidade;
 
-    @ApiModelProperty(value = "estado", required = true, example = "tome tome")
+    @ApiModelProperty(value = "Estado", required = true, example = "SP")
     private String estado;
 
-    @ApiModelProperty(value = "cep", required = true, example = "tome tome")
+    @ApiModelProperty(value = "CEP", required = true, example = "12345678")
     private String cep;
 
-    @ApiModelProperty(value = "usuario", required = true, example = "tome tome")
+    @ApiModelProperty(value = "Usuário", required = true, example = "Objeto Usuário")
     private Usuario usuario;
 
     public Long getNumero() {
